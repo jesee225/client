@@ -33,7 +33,7 @@ def parsed_url(url):
     port = port_dict[protocol]
 
     # 检查端口
-    if host.find(':') != -1:
+    if ':' in host:
         h = host.split(':')
         host = h[0]
         port = int(h[1])
@@ -97,7 +97,7 @@ def get(url):
     response = response_by_socket(s)
     r = response.decode(encoding)
     status_code, headers, body = parsed_response(r)
-    if status_code == 301:
+    if status_code in [301, 302]:
         url = headers['Location']
         get(url)
     return status_code, headers, body
